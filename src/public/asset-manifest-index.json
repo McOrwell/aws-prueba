@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.dbedb06d.css",
-    "main.js": "/static/js/main.dfe7be04.js",
+    "main.js": "/static/js/main.fa0431c6.js",
     "static/media/Rinolisa.jpg": "/static/media/Rinolisa.69c7ab69262887302ad2.jpg",
     "static/media/instagram.png": "/static/media/instagram.abbb73d8892811fe0693.png",
     "static/media/linkedin.png": "/static/media/linkedin.bd873427154d19f56150.png",
@@ -10,10 +10,10 @@
     "static/media/net.png": "/static/media/net.dbba9e664c0836d5cead.png",
     "index.html": "/index.html",
     "main.dbedb06d.css.map": "/static/css/main.dbedb06d.css.map",
-    "main.dfe7be04.js.map": "/static/js/main.dfe7be04.js.map"
+    "main.fa0431c6.js.map": "/static/js/main.fa0431c6.js.map"
   },
   "entrypoints": [
     "static/css/main.dbedb06d.css",
-    "static/js/main.dfe7be04.js"
+    "static/js/main.fa0431c6.js"
   ]
 }
