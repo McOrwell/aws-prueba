@@ -58,7 +58,7 @@ router.post('/crearComprador', crearComprador);
 router.post('/crearProduct', crearProduct);
 router.post('/crearGaleria', crearGaleria);
 router.post('/crearUsuario', crearUsuario);
-router.post('/seeder', Seeder);
+router.get('/seeder', Seeder);
 
 //U - Update
 router.post('/actualizarArtista', actualizarArtista);
@@ -92,24 +92,41 @@ router.post('/borrarUsuarios', borrarUsuarios);
 
 /* Servidor */
 
-router.get(`/admin/inicializarPagina`, async (req, res) => { res.render('admin'); });
-router.get(`/admin/subirImagen`, async (req, res) => { res.render('admin'); });
+  /* Admin */
+    router.get(`/admin/inicializarPagina`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/subirImagen`, async (req, res) => { res.render('admin'); });
 
 
-router.get(`/admin`, async (req, res) => { res.render('admin'); });
-router.get(`/admin/login`, async (req, res) => { res.render('admin'); });
-router.get(`/admin/artistas`, async (req, res) => { res.render('admin'); });
-router.get(`/admin/obras`, async (req, res) => { res.render('admin'); });
-router.get(`/admin/verContactos`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/login`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/artistas`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/obras`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/verContactos`, async (req, res) => { res.render('admin'); });
 
 
-router.get(`/admin/artistas/:id`, async (req, res) => { res.render('admin'); });
-router.get(`/admin/obras/:id`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/artistas/:id`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/obras/:id`, async (req, res) => { res.render('admin'); });
 
-router.get(`/admin/galerias/editarGaleria`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/galerias/editarGaleria`, async (req, res) => { res.render('admin'); });
 
-router.get(`/admin/artistas/crearArtista`, async (req, res) => { res.render('admin'); });
-router.get(`/admin/obras/crearObra`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/artistas/crearArtista`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/obras/crearObra`, async (req, res) => { res.render('admin'); });
+  /* Admin */
+
+  /* Public */
+    router.get(`/productos`, async (req, res) => { res.render('index'); });
+    router.get(`/productos/:id`, async (req, res) => { res.render('index'); });
+    router.get(`/productos/pagina/:id`, async (req, res) => { res.render('index'); });
+
+    router.get(`/artistas`, async (req, res) => { res.render('index'); });
+    router.get(`/artistas/:id`, async (req, res) => { res.render('index'); });
+    router.get(`/artistas/pagina/:Pagina`, async (req, res) => { res.render('index'); });
+
+    router.get(`/cotizarObra/:id`, async (req, res) => { res.render('index'); });
+
+  /* Public */
+
+
 /* Servidor */
 
 
