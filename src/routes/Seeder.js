@@ -65,7 +65,7 @@ async function transformarCompradorData(index = 0, obraId = false){
     let { _id } = obraCotizada;
 
     var datosComprador = {
-        sellerName:{
+        name:{
             name:'Juan',
             lastName:`Nieves ${index}`
         },

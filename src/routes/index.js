@@ -42,7 +42,7 @@ const upload = multer({ storage, fileFilter });
 router.post('/subirImagen', upload.single('imagen'), async (req, res) => {
   console.log(req.file);
   let newImagen = await crearImagen(req.file);
-  res.json(newImagen);
+  res.redirect(`/admin/subirImagen`);
 });
 
 /* MULTER */
@@ -53,17 +53,17 @@ router.post('/rutaPrueba', async (req, res) => {
   res.json(false);
 });
 
-router.post('/crearArtista', crearArtista);
+router.post('/crearArtista', isAuthenticated, crearArtista);
 router.post('/crearComprador', crearComprador);
-router.post('/crearProduct', crearProduct);
-router.post('/crearGaleria', crearGaleria);
-router.post('/crearUsuario', crearUsuario);
-router.get('/seeder', Seeder);
+router.post('/crearProduct', isAuthenticated, crearProduct);
+router.post('/crearGaleria', isAuthenticated, crearGaleria);
+router.post('/crearUsuario', isAuthenticated, crearUsuario);
+router.get('/seeder', isAuthenticated, Seeder);
 
 //U - Update
-router.post('/actualizarArtista', actualizarArtista);
-router.post('/actualizarProduct', actualizarProduct);
-router.post('/actualizarGaleria', actualizarGaleria);
+router.post('/actualizarArtista', isAuthenticated, actualizarArtista);
+router.post('/actualizarProduct', isAuthenticated, actualizarProduct);
+router.post('/actualizarGaleria', isAuthenticated, actualizarGaleria);
 
 //R - Read
 router.post('/verArtistas', verArtistas);
@@ -71,21 +71,21 @@ router.post('/verCompradores', verCompradores);
 router.post('/verProducts', verProducts);
 router.post('/verGalerias', verGalerias);
 
-router.post('/countUsuarios', countUsuarios);
-router.post('/countGalerias', countGalerias);
+router.post('/countUsuarios', isAuthenticated, countUsuarios);
+router.post('/countGalerias', isAuthenticated, countGalerias);
 router.post('/verImagenes', verImagenes);
 
 
 //U - Update
 
 //D - Delete
-router.post('/borrarArtistas', borrarArtistas);
-router.post('/borrarArtista', borrarArtista);
-router.post('/borrarCompradores', borrarCompradores);
-router.post('/borrarProduct', borrarProduct);
-router.post('/borrarProducts', borrarProducts);
-router.post('/borrarGalerias', borrarGalerias);
-router.post('/borrarUsuarios', borrarUsuarios);
+router.post('/borrarArtistas', isAuthenticated, borrarArtistas);
+router.post('/borrarArtista', isAuthenticated, borrarArtista);
+router.post('/borrarCompradores', isAuthenticated, borrarCompradores);
+router.post('/borrarProduct', isAuthenticated, borrarProduct);
+router.post('/borrarProducts', isAuthenticated, borrarProducts);
+router.post('/borrarGalerias', isAuthenticated, borrarGalerias);
+router.post('/borrarUsuarios', isAuthenticated, borrarUsuarios);
 
 
 
@@ -94,23 +94,23 @@ router.post('/borrarUsuarios', borrarUsuarios);
 
   /* Admin */
     router.get(`/admin/inicializarPagina`, async (req, res) => { res.render('admin'); });
-    router.get(`/admin/subirImagen`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/subirImagen`, isAuthenticated, async (req, res) => { res.render('admin'); });
 
 
-    router.get(`/admin`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin`,isAuthenticated, async (req, res) => { res.render('admin'); });
     router.get(`/admin/login`, async (req, res) => { res.render('admin'); });
-    router.get(`/admin/artistas`, async (req, res) => { res.render('admin'); });
-    router.get(`/admin/obras`, async (req, res) => { res.render('admin'); });
-    router.get(`/admin/verContactos`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/artistas`, isAuthenticated, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/obras`, isAuthenticated, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/verContactos`, isAuthenticated, (req, res) => { res.render('admin'); });
 
 
-    router.get(`/admin/artistas/:id`, async (req, res) => { res.render('admin'); });
-    router.get(`/admin/obras/:id`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/artistas/:id`, isAuthenticated, (req, res) => { res.render('admin'); });
+    router.get(`/admin/obras/:id`, isAuthenticated, (req, res) => { res.render('admin'); });
 
-    router.get(`/admin/galerias/editarGaleria`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/galerias/editarGaleria`, isAuthenticated, async (req, res) => { res.render('admin'); });
 
-    router.get(`/admin/artistas/crearArtista`, async (req, res) => { res.render('admin'); });
-    router.get(`/admin/obras/crearObra`, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/artistas/crearArtista`, isAuthenticated, async (req, res) => { res.render('admin'); });
+    router.get(`/admin/obras/crearObra`, isAuthenticated, async (req, res) => { res.render('admin'); });
   /* Admin */
 
   /* Public */
@@ -137,36 +137,25 @@ router.get('/', (req, res, next) => {
   res.render('index');
 });
 
-router.get('/signup', (req, res, next) => {
-  res.render('signup');
-});
-
 router.post('/signup', passport.authenticate('local-signup', {
-  successRedirect: '/profile',
-  failureRedirect: '/signup',
+  successRedirect: '/admin',
+  failureRedirect: '/admin/login',
   failureFlash: true
 })); 
 
-router.get('/signin', (req, res, next) => {
-  res.render('signin');
-});
-
 
 router.post('/signin', passport.authenticate('local-signin', {
-  successRedirect: '/profile',
-  failureRedirect: '/signin',
+  successRedirect: '/admin',
+  failureRedirect: '/admin/login',
   failureFlash: true
 }));
 
-router.get('/profile',isAuthenticated, (req, res, next) => {
-  res.render('profile');
-});
 
 router.get('/admin/logout', (req, res, next) => {
   req.logout(
     function(err) {
       if (err) { return next(err); }
-      res.redirect('/');
+      res.redirect('/admin/login');
     }
   );
   //res.redirect('/');
@@ -178,7 +167,7 @@ function isAuthenticated(req, res, next) {
     return next();
   }
 
-  res.redirect('/')
+  res.redirect('/admin/login')
 }
 
 module.exports = router;

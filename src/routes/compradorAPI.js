@@ -27,8 +27,11 @@ async function crearComprador(req, res){
         datos.socialNetwork = datos.socialNetwork[0];
         datos.location = datos.location[0];
 
+    console.log(datos);
     const nuevoComprador = new Comprador(datos);
     await nuevoComprador.save();
+
+    console.log(nuevoComprador);
 
     res.json(nuevoComprador);
     return nuevoComprador;
