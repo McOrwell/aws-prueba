@@ -1,10 +1,11 @@
 const Product = require('../models/product');
 const Artista = require('../models/artista');
 
-const { crearArtista, _crearArtista } = require('./artistaAPI');
-const { crearComprador, _crearComprador } = require('./compradorAPI');
-const { crearProduct, _crearProduct } = require('./productAPI');
-const { crearGaleria, _crearGaleria } = require('./galeriaAPI');
+const { crearArtista, _crearArtista, borrarArtistas } = require('./artistaAPI');
+const { crearComprador, _crearComprador, borrarCompradores } = require('./compradorAPI');
+const { crearProduct, _crearProduct, borrarProducts } = require('./productAPI');
+const { crearGaleria, _crearGaleria, borrarGalerias } = require('./galeriaAPI');
+const { borrarUsuarios } = require('./userAPI');
 
 function getRandomArbitrary(min = 0, max = 1) {
     return Math.floor(Math.random() * (max - min) + min);
@@ -21,20 +22,24 @@ function getRandomArray(length = getRandomArbitrary(1, 20)){
 
 function transformarArtistaData(index = 0, workIds = []){
 
+    let imgIndex = index;
+        imgIndex++;
+    imgIndex > 50 ? imgIndex = imgIndex - 50 : imgIndex = imgIndex;
+
     var datosArtista = {
         sellerName:{
             name:'John',
             lastName:`Doe ${index}`
         },
-        stageName:`Jacob Flores Carrillo ${index}`,
-        artistImg:'https://jacobflorescarrillo.com/img/paint-15.jpg',
+        stageName:`Artista Doe ${index}`,
+        artistImg:`https://previews.123rf.com/images/tuktukdesign/tuktukdesign1609/tuktukdesign160900004/62073399-icono-de-usuario-hombre-perfil-hombre-de-negocios-avatar-ilustraci%C3%B3n-vectorial-persona-glifo.jpg`,
         locations:[
             {
-                calle:'Nazareth',
-                numero:687,
-                extension:'B',
-                cp:44770,
-                colonia:'Hermosa Provincia',
+                calle:'Calle',
+                numero:007,
+                extension:'A',
+                cp:44100,
+                colonia:'Colonia Americana',
                 municipio:'Guadalajara',
                 estado:'Jalisco',
                 pais:'México'
@@ -66,21 +71,21 @@ async function transformarCompradorData(index = 0, obraId = false){
 
     var datosComprador = {
         name:{
-            name:'Juan',
-            lastName:`Nieves ${index}`
+            name:'John',
+            lastName:`Doe ${index}`
         },
         socialNetwork: {
             network:'facebook',
-            name:`Juan Nieves ${index}`,
+            name:`John Doe ${index}`,
             url:'facebook.com'
         },
         buyerType:'Galerista',
         location: {
-            calle:'Nazareth',
-            numero:687,
-            extension:'B',
-            cp:44770,
-            colonia:'Hermosa Provincia',
+            calle:'Calle',
+            numero:007,
+            extension:'A',
+            cp:44100,
+            colonia:'Colonia Americana',
             municipio:'Guadalajara',
             estado:'Jalisco',
             pais:'México'
@@ -93,6 +98,11 @@ async function transformarCompradorData(index = 0, obraId = false){
 }
 
 async function transformarProductData(index = 0, idArtista = false){
+
+    let imgIndex = index;
+    imgIndex++;
+    imgIndex > 50 ? imgIndex = imgIndex - 50 : imgIndex = imgIndex;
+    
     if(idArtista === false) return false;
 
     var datosAutor = await Artista.findById(idArtista);
@@ -106,12 +116,12 @@ async function transformarProductData(index = 0, idArtista = false){
         productImg:'https://jacobflorescarrillo.com/img/paint-15.jpg',
         fichaTecnica:{
             autor:`${stageName}`,
-            titulo: `Rinolisa ${index}`,
+            titulo: `Obra ${index}`,
             ancho: 120,
             alto: 150,
             tecnica: 'oleo sobre tela',
             finalizacion: Date.now(),
-            descripcion:'<h1>Hola Mundo</h1>'
+            descripcion:'Oleo Sobre Tela'
         },
         precio:108000,
         cantidad:1,
@@ -126,15 +136,15 @@ function transformarGaleriaData(index = 0){
 
     var datosPropietario = {
         galeryName: `Galeria de arte ${index}`,
-        owner: { name:'Juan', lastName:'Escutia' },
+        owner: { name:'Juan', lastName:'Nieves' },
         logoCDN: 'https://jacobflorescarrillo.com/img/paint-15.jpg',
         locations:[
             {
-                calle:'Nazareth',
-                numero:687,
-                extension:'B',
-                cp:44770,
-                colonia:'Hermosa Provincia',
+                calle:'Calle',
+                numero:007,
+                extension:'A',
+                cp:44100,
+                colonia:'Colonia Americana',
                 municipio:'Guadalajara',
                 estado:'Jalisco',
                 pais:'México'
@@ -144,7 +154,7 @@ function transformarGaleriaData(index = 0){
         socialNetworks:[
             {
                 network:'facebook',
-                name:`John Doe ${index}`,
+                name:`John Snow ${index}`,
                 url:'https://facebook.com'
             }
         ],

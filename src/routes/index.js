@@ -71,8 +71,8 @@ router.post('/verCompradores', verCompradores);
 router.post('/verProducts', verProducts);
 router.post('/verGalerias', verGalerias);
 
-router.post('/countUsuarios', isAuthenticated, countUsuarios);
-router.post('/countGalerias', isAuthenticated, countGalerias);
+router.post('/countUsuarios', countUsuarios);
+router.post('/countGalerias', countGalerias);
 router.post('/verImagenes', verImagenes);
 
 
